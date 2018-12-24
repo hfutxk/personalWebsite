@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cetc38.mapper.CodeLibraryMapper" >
+  <resultMap id="BaseResultMap" type="com.cetc38.model.CodeLibrary" >
+    <id column="code_id" property="codeId" jdbcType="INTEGER" />
+    <result column="code_title" property="codeTitle" jdbcType="CHAR" />
+    <result column="code_author" property="codeAuthor" jdbcType="CHAR" />
+    <result column="code_date" property="codeDate" jdbcType="TIMESTAMP" />
+    <result column="code_read" property="codeRead" jdbcType="INTEGER" />
+    <result column="code_summary" property="codeSummary" jdbcType="CHAR" />
+    <result column="code_label" property="codeLabel" jdbcType="CHAR" />
+    <result column="code_delete" property="codeDelete" jdbcType="INTEGER" />
+    <result column="code_category" property="codeCategory" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.cetc38.model.CodeLibraryWithBLOBs" extends="BaseResultMap" >
+    <result column="code_html_content" property="codeHtmlContent" jdbcType="LONGVARCHAR" />
+    <result column="code_md_content" property="codeMdContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    code_id, code_title, code_author, code_date, code_read, code_summary, code_label, 
+    code_delete, code_category
+  </sql>
+  <sql id="Blob_Column_List" >
+    code_html_content, code_md_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.cetc38.model.CodeLibraryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from code_library
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cetc38.model.CodeLibraryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from code_library
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from code_library
+    where code_id = #{codeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from code_library
+    where code_id = #{codeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cetc38.model.CodeLibraryExample" >
+    delete from code_library
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cetc38.model.CodeLibraryWithBLOBs" >
+    insert into code_library (code_id, code_title, code_author, 
+      code_date, code_read, code_summary, 
+      code_label, code_delete, code_category, 
+      code_html_content, code_md_content)
+    values (#{codeId,jdbcType=INTEGER}, #{codeTitle,jdbcType=CHAR}, #{codeAuthor,jdbcType=CHAR}, 
+      #{codeDate,jdbcType=TIMESTAMP}, #{codeRead,jdbcType=INTEGER}, #{codeSummary,jdbcType=CHAR}, 
+      #{codeLabel,jdbcType=CHAR}, #{codeDelete,jdbcType=INTEGER}, #{codeCategory,jdbcType=INTEGER}, 
+      #{codeHtmlContent,jdbcType=LONGVARCHAR}, #{codeMdContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cetc38.model.CodeLibraryWithBLOBs" >
+    insert into code_library
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="codeId != null" >
+        code_id,
+      </if>
+      <if test="codeTitle != null" >
+        code_title,
+      </if>
+      <if test="codeAuthor != null" >
+        code_author,
+      </if>
+      <if test="codeDate != null" >
+        code_date,
+      </if>
+      <if test="codeRead != null" >
+        code_read,
+      </if>
+      <if test="codeSummary != null" >
+        code_summary,
+      </if>
+      <if test="codeLabel != null" >
+        code_label,
+      </if>
+      <if test="codeDelete != null" >
+        code_delete,
+      </if>
+      <if test="codeCategory != null" >
+        code_category,
+      </if>
+      <if test="codeHtmlContent != null" >
+        code_html_content,
+      </if>
+      <if test="codeMdContent != null" >
+        code_md_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="codeId != null" >
+        #{codeId,jdbcType=INTEGER},
+      </if>
+      <if test="codeTitle != null" >
+        #{codeTitle,jdbcType=CHAR},
+      </if>
+      <if test="codeAuthor != null" >
+        #{codeAuthor,jdbcType=CHAR},
+      </if>
+      <if test="codeDate != null" >
+        #{codeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="codeRead != null" >
+        #{codeRead,jdbcType=INTEGER},
+      </if>
+      <if test="codeSummary != null" >
+        #{codeSummary,jdbcType=CHAR},
+      </if>
+      <if test="codeLabel != null" >
+        #{codeLabel,jdbcType=CHAR},
+      </if>
+      <if test="codeDelete != null" >
+        #{codeDelete,jdbcType=INTEGER},
+      </if>
+      <if test="codeCategory != null" >
+        #{codeCategory,jdbcType=INTEGER},
+      </if>
+      <if test="codeHtmlContent != null" >
+        #{codeHtmlContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="codeMdContent != null" >
+        #{codeMdContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cetc38.model.CodeLibraryExample" resultType="java.lang.Integer" >
+    select count(*) from code_library
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update code_library
+    <set >
+      <if test="record.codeId != null" >
+        code_id = #{record.codeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.codeTitle != null" >
+        code_title = #{record.codeTitle,jdbcType=CHAR},
+      </if>
+      <if test="record.codeAuthor != null" >
+        code_author = #{record.codeAuthor,jdbcType=CHAR},
+      </if>
+      <if test="record.codeDate != null" >
+        code_date = #{record.codeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.codeRead != null" >
+        code_read = #{record.codeRead,jdbcType=INTEGER},
+      </if>
+      <if test="record.codeSummary != null" >
+        code_summary = #{record.codeSummary,jdbcType=CHAR},
+      </if>
+      <if test="record.codeLabel != null" >
+        code_label = #{record.codeLabel,jdbcType=CHAR},
+      </if>
+      <if test="record.codeDelete != null" >
+        code_delete = #{record.codeDelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.codeCategory != null" >
+        code_category = #{record.codeCategory,jdbcType=INTEGER},
+      </if>
+      <if test="record.codeHtmlContent != null" >
+        code_html_content = #{record.codeHtmlContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.codeMdContent != null" >
+        code_md_content = #{record.codeMdContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update code_library
+    set code_id = #{record.codeId,jdbcType=INTEGER},
+      code_title = #{record.codeTitle,jdbcType=CHAR},
+      code_author = #{record.codeAuthor,jdbcType=CHAR},
+      code_date = #{record.codeDate,jdbcType=TIMESTAMP},
+      code_read = #{record.codeRead,jdbcType=INTEGER},
+      code_summary = #{record.codeSummary,jdbcType=CHAR},
+      code_label = #{record.codeLabel,jdbcType=CHAR},
+      code_delete = #{record.codeDelete,jdbcType=INTEGER},
+      code_category = #{record.codeCategory,jdbcType=INTEGER},
+      code_html_content = #{record.codeHtmlContent,jdbcType=LONGVARCHAR},
+      code_md_content = #{record.codeMdContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update code_library
+    set code_id = #{record.codeId,jdbcType=INTEGER},
+      code_title = #{record.codeTitle,jdbcType=CHAR},
+      code_author = #{record.codeAuthor,jdbcType=CHAR},
+      code_date = #{record.codeDate,jdbcType=TIMESTAMP},
+      code_read = #{record.codeRead,jdbcType=INTEGER},
+      code_summary = #{record.codeSummary,jdbcType=CHAR},
+      code_label = #{record.codeLabel,jdbcType=CHAR},
+      code_delete = #{record.codeDelete,jdbcType=INTEGER},
+      code_category = #{record.codeCategory,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cetc38.model.CodeLibraryWithBLOBs" >
+    update code_library
+    <set >
+      <if test="codeTitle != null" >
+        code_title = #{codeTitle,jdbcType=CHAR},
+      </if>
+      <if test="codeAuthor != null" >
+        code_author = #{codeAuthor,jdbcType=CHAR},
+      </if>
+      <if test="codeDate != null" >
+        code_date = #{codeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="codeRead != null" >
+        code_read = #{codeRead,jdbcType=INTEGER},
+      </if>
+      <if test="codeSummary != null" >
+        code_summary = #{codeSummary,jdbcType=CHAR},
+      </if>
+      <if test="codeLabel != null" >
+        code_label = #{codeLabel,jdbcType=CHAR},
+      </if>
+      <if test="codeDelete != null" >
+        code_delete = #{codeDelete,jdbcType=INTEGER},
+      </if>
+      <if test="codeCategory != null" >
+        code_category = #{codeCategory,jdbcType=INTEGER},
+      </if>
+      <if test="codeHtmlContent != null" >
+        code_html_content = #{codeHtmlContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="codeMdContent != null" >
+        code_md_content = #{codeMdContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where code_id = #{codeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cetc38.model.CodeLibraryWithBLOBs" >
+    update code_library
+    set code_title = #{codeTitle,jdbcType=CHAR},
+      code_author = #{codeAuthor,jdbcType=CHAR},
+      code_date = #{codeDate,jdbcType=TIMESTAMP},
+      code_read = #{codeRead,jdbcType=INTEGER},
+      code_summary = #{codeSummary,jdbcType=CHAR},
+      code_label = #{codeLabel,jdbcType=CHAR},
+      code_delete = #{codeDelete,jdbcType=INTEGER},
+      code_category = #{codeCategory,jdbcType=INTEGER},
+      code_html_content = #{codeHtmlContent,jdbcType=LONGVARCHAR},
+      code_md_content = #{codeMdContent,jdbcType=LONGVARCHAR}
+    where code_id = #{codeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cetc38.model.CodeLibrary" >
+    update code_library
+    set code_title = #{codeTitle,jdbcType=CHAR},
+      code_author = #{codeAuthor,jdbcType=CHAR},
+      code_date = #{codeDate,jdbcType=TIMESTAMP},
+      code_read = #{codeRead,jdbcType=INTEGER},
+      code_summary = #{codeSummary,jdbcType=CHAR},
+      code_label = #{codeLabel,jdbcType=CHAR},
+      code_delete = #{codeDelete,jdbcType=INTEGER},
+      code_category = #{codeCategory,jdbcType=INTEGER}
+    where code_id = #{codeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateCodeReadById" parameterType="java.lang.Integer">
+  	UPDATE code_library 
+  	SET code_read = ((SELECT selTmp.code_read FROM (select tmp.* from code_library tmp) AS selTmp where code_id = #{codeId}) + 1) 
+  	WHERE code_id = #{codeId}
+  </update>
+  
+  <update id="logicDeleteCodeById" parameterType="java.lang.Integer">
+      UPDATE code_library SET code_delete = 1 WHERE code_id = #{codeId}
+  </update>
+  
+  <update id="queryPreviousBlog" parameterType="java.lang.Integer">
+  	SELECT 
+  	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+  	FROM code_library 
+  	WHERE code_delete = #{codeId} AND code_id &lt; #{codeId} ORDER BY code_id DESC LIMIT 1
+  </update>
+  
+  <update id="queryNextBlog" parameterType="java.lang.Integer">
+  	SELECT 
+  	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+  	FROM code_library 
+  	WHERE code_delete = #{codeId} AND code_id &gt; #{codeId} ORDER BY code_id DESC LIMIT 1
+  </update>
+</mapper>

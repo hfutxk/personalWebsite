@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cetc38.mapper.ReleaseFeatureMapper" >
+  <resultMap id="BaseResultMap" type="com.cetc38.model.ReleaseFeature" >
+    <id column="release_id" property="releaseId" jdbcType="INTEGER" />
+    <result column="release_author" property="releaseAuthor" jdbcType="CHAR" />
+    <result column="release_date" property="releaseDate" jdbcType="TIMESTAMP" />
+    <result column="release_number" property="releaseNumber" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.cetc38.model.ReleaseFeature" extends="BaseResultMap" >
+    <result column="release_content" property="releaseContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    release_id, release_author, release_date, release_number
+  </sql>
+  <sql id="Blob_Column_List" >
+    release_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.cetc38.model.ReleaseFeatureExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from release_feature
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cetc38.model.ReleaseFeatureExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from release_feature
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from release_feature
+    where release_id = #{releaseId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="queryLatestReleaseFeature"  resultMap="ResultMapWithBLOBs">
+   select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from release_feature
+    WHERE release_id = (SELECT max(release_id) FROM release_feature)
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from release_feature
+    where release_id = #{releaseId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cetc38.model.ReleaseFeatureExample" >
+    delete from release_feature
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cetc38.model.ReleaseFeature" >
+    insert into release_feature (release_id, release_author, release_date, 
+      release_number, release_content)
+    values (#{releaseId,jdbcType=INTEGER}, #{releaseAuthor,jdbcType=CHAR}, #{releaseDate,jdbcType=TIMESTAMP}, 
+      #{releaseNumber,jdbcType=CHAR}, #{releaseContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cetc38.model.ReleaseFeature" >
+    insert into release_feature
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="releaseId != null" >
+        release_id,
+      </if>
+      <if test="releaseAuthor != null" >
+        release_author,
+      </if>
+      <if test="releaseDate != null" >
+        release_date,
+      </if>
+      <if test="releaseNumber != null" >
+        release_number,
+      </if>
+      <if test="releaseContent != null" >
+        release_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="releaseId != null" >
+        #{releaseId,jdbcType=INTEGER},
+      </if>
+      <if test="releaseAuthor != null" >
+        #{releaseAuthor,jdbcType=CHAR},
+      </if>
+      <if test="releaseDate != null" >
+        #{releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseNumber != null" >
+        #{releaseNumber,jdbcType=CHAR},
+      </if>
+      <if test="releaseContent != null" >
+        #{releaseContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cetc38.model.ReleaseFeatureExample" resultType="java.lang.Integer" >
+    select count(*) from release_feature
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update release_feature
+    <set >
+      <if test="record.releaseId != null" >
+        release_id = #{record.releaseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.releaseAuthor != null" >
+        release_author = #{record.releaseAuthor,jdbcType=CHAR},
+      </if>
+      <if test="record.releaseDate != null" >
+        release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.releaseNumber != null" >
+        release_number = #{record.releaseNumber,jdbcType=CHAR},
+      </if>
+      <if test="record.releaseContent != null" >
+        release_content = #{record.releaseContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update release_feature
+    set release_id = #{record.releaseId,jdbcType=INTEGER},
+      release_author = #{record.releaseAuthor,jdbcType=CHAR},
+      release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
+      release_number = #{record.releaseNumber,jdbcType=CHAR},
+      release_content = #{record.releaseContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update release_feature
+    set release_id = #{record.releaseId,jdbcType=INTEGER},
+      release_author = #{record.releaseAuthor,jdbcType=CHAR},
+      release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
+      release_number = #{record.releaseNumber,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cetc38.model.ReleaseFeature" >
+    update release_feature
+    <set >
+      <if test="releaseAuthor != null" >
+        release_author = #{releaseAuthor,jdbcType=CHAR},
+      </if>
+      <if test="releaseDate != null" >
+        release_date = #{releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseNumber != null" >
+        release_number = #{releaseNumber,jdbcType=CHAR},
+      </if>
+      <if test="releaseContent != null" >
+        release_content = #{releaseContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where release_id = #{releaseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cetc38.model.ReleaseFeature" >
+    update release_feature
+    set release_author = #{releaseAuthor,jdbcType=CHAR},
+      release_date = #{releaseDate,jdbcType=TIMESTAMP},
+      release_number = #{releaseNumber,jdbcType=CHAR},
+      release_content = #{releaseContent,jdbcType=LONGVARCHAR}
+    where release_id = #{releaseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cetc38.model.ReleaseFeature" >
+    update release_feature
+    set release_author = #{releaseAuthor,jdbcType=CHAR},
+      release_date = #{releaseDate,jdbcType=TIMESTAMP},
+      release_number = #{releaseNumber,jdbcType=CHAR}
+    where release_id = #{releaseId,jdbcType=INTEGER}
+  </update>
+</mapper>

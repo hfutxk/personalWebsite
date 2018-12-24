@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cetc38.mapper.MessageAreaMapper" >
+  <resultMap id="BaseResultMap" type="com.cetc38.model.MessageArea" >
+    <id column="message_id" property="messageId" jdbcType="INTEGER" />
+    <result column="message_parent" property="messageParent" jdbcType="INTEGER" />
+    <result column="message_belong" property="messageBelong" jdbcType="INTEGER" />
+    <result column="message_date" property="messageDate" jdbcType="TIMESTAMP" />
+    <result column="message_email" property="messageEmail" jdbcType="CHAR" />
+    <result column="message_username" property="messageUsername" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.cetc38.model.MessageArea" extends="BaseResultMap" >
+    <result column="message_content" property="messageContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    message_id, message_parent, message_belong, message_date, message_email, message_username
+  </sql>
+  <sql id="Blob_Column_List" >
+    message_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.cetc38.model.MessageAreaExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from message_area
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cetc38.model.MessageAreaExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from message_area
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from message_area
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from message_area
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cetc38.model.MessageAreaExample" >
+    delete from message_area
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cetc38.model.MessageArea" >
+    insert into message_area (message_id, message_parent, message_belong, 
+      message_date, message_email, message_username, 
+      message_content)
+    values (#{messageId,jdbcType=INTEGER}, #{messageParent,jdbcType=INTEGER}, #{messageBelong,jdbcType=INTEGER}, 
+      #{messageDate,jdbcType=TIMESTAMP}, #{messageEmail,jdbcType=CHAR}, #{messageUsername,jdbcType=CHAR}, 
+      #{messageContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cetc38.model.MessageArea" >
+    insert into message_area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="messageId != null" >
+        message_id,
+      </if>
+      <if test="messageParent != null" >
+        message_parent,
+      </if>
+      <if test="messageBelong != null" >
+        message_belong,
+      </if>
+      <if test="messageDate != null" >
+        message_date,
+      </if>
+      <if test="messageEmail != null" >
+        message_email,
+      </if>
+      <if test="messageUsername != null" >
+        message_username,
+      </if>
+      <if test="messageContent != null" >
+        message_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="messageId != null" >
+        #{messageId,jdbcType=INTEGER},
+      </if>
+      <if test="messageParent != null" >
+        #{messageParent,jdbcType=INTEGER},
+      </if>
+      <if test="messageBelong != null" >
+        #{messageBelong,jdbcType=INTEGER},
+      </if>
+      <if test="messageDate != null" >
+        #{messageDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageEmail != null" >
+        #{messageEmail,jdbcType=CHAR},
+      </if>
+      <if test="messageUsername != null" >
+        #{messageUsername,jdbcType=CHAR},
+      </if>
+      <if test="messageContent != null" >
+        #{messageContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cetc38.model.MessageAreaExample" resultType="java.lang.Integer" >
+    select count(*) from message_area
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update message_area
+    <set >
+      <if test="record.messageId != null" >
+        message_id = #{record.messageId,jdbcType=INTEGER},
+      </if>
+      <if test="record.messageParent != null" >
+        message_parent = #{record.messageParent,jdbcType=INTEGER},
+      </if>
+      <if test="record.messageBelong != null" >
+        message_belong = #{record.messageBelong,jdbcType=INTEGER},
+      </if>
+      <if test="record.messageDate != null" >
+        message_date = #{record.messageDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.messageEmail != null" >
+        message_email = #{record.messageEmail,jdbcType=CHAR},
+      </if>
+      <if test="record.messageUsername != null" >
+        message_username = #{record.messageUsername,jdbcType=CHAR},
+      </if>
+      <if test="record.messageContent != null" >
+        message_content = #{record.messageContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update message_area
+    set message_id = #{record.messageId,jdbcType=INTEGER},
+      message_parent = #{record.messageParent,jdbcType=INTEGER},
+      message_belong = #{record.messageBelong,jdbcType=INTEGER},
+      message_date = #{record.messageDate,jdbcType=TIMESTAMP},
+      message_email = #{record.messageEmail,jdbcType=CHAR},
+      message_username = #{record.messageUsername,jdbcType=CHAR},
+      message_content = #{record.messageContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update message_area
+    set message_id = #{record.messageId,jdbcType=INTEGER},
+      message_parent = #{record.messageParent,jdbcType=INTEGER},
+      message_belong = #{record.messageBelong,jdbcType=INTEGER},
+      message_date = #{record.messageDate,jdbcType=TIMESTAMP},
+      message_email = #{record.messageEmail,jdbcType=CHAR},
+      message_username = #{record.messageUsername,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cetc38.model.MessageArea" >
+    update message_area
+    <set >
+      <if test="messageParent != null" >
+        message_parent = #{messageParent,jdbcType=INTEGER},
+      </if>
+      <if test="messageBelong != null" >
+        message_belong = #{messageBelong,jdbcType=INTEGER},
+      </if>
+      <if test="messageDate != null" >
+        message_date = #{messageDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageEmail != null" >
+        message_email = #{messageEmail,jdbcType=CHAR},
+      </if>
+      <if test="messageUsername != null" >
+        message_username = #{messageUsername,jdbcType=CHAR},
+      </if>
+      <if test="messageContent != null" >
+        message_content = #{messageContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cetc38.model.MessageArea" >
+    update message_area
+    set message_parent = #{messageParent,jdbcType=INTEGER},
+      message_belong = #{messageBelong,jdbcType=INTEGER},
+      message_date = #{messageDate,jdbcType=TIMESTAMP},
+      message_email = #{messageEmail,jdbcType=CHAR},
+      message_username = #{messageUsername,jdbcType=CHAR},
+      message_content = #{messageContent,jdbcType=LONGVARCHAR}
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cetc38.model.MessageArea" >
+    update message_area
+    set message_parent = #{messageParent,jdbcType=INTEGER},
+      message_belong = #{messageBelong,jdbcType=INTEGER},
+      message_date = #{messageDate,jdbcType=TIMESTAMP},
+      message_email = #{messageEmail,jdbcType=CHAR},
+      message_username = #{messageUsername,jdbcType=CHAR}
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </update>
+</mapper>

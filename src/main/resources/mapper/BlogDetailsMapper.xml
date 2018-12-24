@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cetc38.mapper.BlogDetailsMapper" >
+  <resultMap id="BaseResultMap" type="com.cetc38.model.BlogDetails" >
+    <id column="blog_id" property="blogId" jdbcType="INTEGER" />
+    <result column="blog_title" property="blogTitle" jdbcType="CHAR" />
+    <result column="blog_author" property="blogAuthor" jdbcType="CHAR" />
+    <result column="blog_date" property="blogDate" jdbcType="TIMESTAMP" />
+    <result column="blog_read" property="blogRead" jdbcType="INTEGER" />
+    <result column="blog_summary" property="blogSummary" jdbcType="CHAR" />
+    <result column="blog_label" property="blogLabel" jdbcType="CHAR" />
+    <result column="blog_delete" property="blogDelete" jdbcType="INTEGER" />
+    <result column="blog_category" property="blogCategory" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.cetc38.model.BlogDetailsWithBLOBs" extends="BaseResultMap" >
+    <result column="blog_html_content" property="blogHtmlContent" jdbcType="LONGVARCHAR" />
+    <result column="blog_md_content" property="blogMdContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    blog_id, blog_title, blog_author, blog_date, blog_read, blog_summary, blog_label, 
+    blog_delete, blog_category
+  </sql>
+  <sql id="Blob_Column_List" >
+    blog_html_content, blog_md_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.cetc38.model.BlogDetailsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cetc38.model.BlogDetailsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from blog_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_details
+    where blog_id = #{blogId,jdbcType=INTEGER}
+  </select>
+  <select id="queryAllBlogDetailss"  resultMap="ResultMapWithBLOBs">
+  	    select 
+    <include refid="Base_Column_List" />
+    ,
+    blog_html_content
+    from blog_details
+  </select>
+  
+  <select id="queryPreviousBlog"  resultMap="ResultMapWithBLOBs"  parameterType="java.lang.Integer">
+  		select 
+		<include refid="Base_Column_List" />
+        ,
+   		<include refid="Blob_Column_List" />
+  		from blog_details 
+  		WHERE blog_delete = 0 AND blog_id &lt; #{blogId} ORDER BY blog_id DESC LIMIT 1
+  </select>
+  
+
+  <select id="queryNextBlog"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+  		SELECT 
+  		<include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+  		FROM blog_details 
+  		WHERE blog_delete = 0 AND blog_id &gt; #{blogId} ORDER BY blog_id DESC LIMIT 1
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from blog_details
+    where blog_id = #{blogId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cetc38.model.BlogDetailsExample" >
+    delete from blog_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cetc38.model.BlogDetailsWithBLOBs" >
+    insert into blog_details (blog_id, blog_title, blog_author, 
+      blog_date, blog_read, blog_summary, 
+      blog_label, blog_delete, blog_category, 
+      blog_html_content, blog_md_content)
+    values (#{blogId,jdbcType=INTEGER}, #{blogTitle,jdbcType=CHAR}, #{blogAuthor,jdbcType=CHAR}, 
+      #{blogDate,jdbcType=TIMESTAMP}, #{blogRead,jdbcType=INTEGER}, #{blogSummary,jdbcType=CHAR}, 
+      #{blogLabel,jdbcType=CHAR}, #{blogDelete,jdbcType=INTEGER}, #{blogCategory,jdbcType=INTEGER}, 
+      #{blogHtmlContent,jdbcType=LONGVARCHAR}, #{blogMdContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cetc38.model.BlogDetailsWithBLOBs" >
+    insert into blog_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="blogId != null" >
+        blog_id,
+      </if>
+      <if test="blogTitle != null" >
+        blog_title,
+      </if>
+      <if test="blogAuthor != null" >
+        blog_author,
+      </if>
+      <if test="blogDate != null" >
+        blog_date,
+      </if>
+      <if test="blogRead != null" >
+        blog_read,
+      </if>
+      <if test="blogSummary != null" >
+        blog_summary,
+      </if>
+      <if test="blogLabel != null" >
+        blog_label,
+      </if>
+      <if test="blogDelete != null" >
+        blog_delete,
+      </if>
+      <if test="blogCategory != null" >
+        blog_category,
+      </if>
+      <if test="blogHtmlContent != null" >
+        blog_html_content,
+      </if>
+      <if test="blogMdContent != null" >
+        blog_md_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="blogId != null" >
+        #{blogId,jdbcType=INTEGER},
+      </if>
+      <if test="blogTitle != null" >
+        #{blogTitle,jdbcType=CHAR},
+      </if>
+      <if test="blogAuthor != null" >
+        #{blogAuthor,jdbcType=CHAR},
+      </if>
+      <if test="blogDate != null" >
+        #{blogDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blogRead != null" >
+        #{blogRead,jdbcType=INTEGER},
+      </if>
+      <if test="blogSummary != null" >
+        #{blogSummary,jdbcType=CHAR},
+      </if>
+      <if test="blogLabel != null" >
+        #{blogLabel,jdbcType=CHAR},
+      </if>
+      <if test="blogDelete != null" >
+        #{blogDelete,jdbcType=INTEGER},
+      </if>
+      <if test="blogCategory != null" >
+        #{blogCategory,jdbcType=INTEGER},
+      </if>
+      <if test="blogHtmlContent != null" >
+        #{blogHtmlContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="blogMdContent != null" >
+        #{blogMdContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cetc38.model.BlogDetailsExample" resultType="java.lang.Integer" >
+    select count(*) from blog_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  
+  
+  <update id="updateByExampleSelective" parameterType="map" >
+    update blog_details
+    <set >
+      <if test="record.blogId != null" >
+        blog_id = #{record.blogId,jdbcType=INTEGER},
+      </if>
+      <if test="record.blogTitle != null" >
+        blog_title = #{record.blogTitle,jdbcType=CHAR},
+      </if>
+      <if test="record.blogAuthor != null" >
+        blog_author = #{record.blogAuthor,jdbcType=CHAR},
+      </if>
+      <if test="record.blogDate != null" >
+        blog_date = #{record.blogDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.blogRead != null" >
+        blog_read = #{record.blogRead,jdbcType=INTEGER},
+      </if>
+      <if test="record.blogSummary != null" >
+        blog_summary = #{record.blogSummary,jdbcType=CHAR},
+      </if>
+      <if test="record.blogLabel != null" >
+        blog_label = #{record.blogLabel,jdbcType=CHAR},
+      </if>
+      <if test="record.blogDelete != null" >
+        blog_delete = #{record.blogDelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.blogCategory != null" >
+        blog_category = #{record.blogCategory,jdbcType=INTEGER},
+      </if>
+      <if test="record.blogHtmlContent != null" >
+        blog_html_content = #{record.blogHtmlContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.blogMdContent != null" >
+        blog_md_content = #{record.blogMdContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update blog_details
+    set blog_id = #{record.blogId,jdbcType=INTEGER},
+      blog_title = #{record.blogTitle,jdbcType=CHAR},
+      blog_author = #{record.blogAuthor,jdbcType=CHAR},
+      blog_date = #{record.blogDate,jdbcType=TIMESTAMP},
+      blog_read = #{record.blogRead,jdbcType=INTEGER},
+      blog_summary = #{record.blogSummary,jdbcType=CHAR},
+      blog_label = #{record.blogLabel,jdbcType=CHAR},
+      blog_delete = #{record.blogDelete,jdbcType=INTEGER},
+      blog_category = #{record.blogCategory,jdbcType=INTEGER},
+      blog_html_content = #{record.blogHtmlContent,jdbcType=LONGVARCHAR},
+      blog_md_content = #{record.blogMdContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update blog_details
+    set blog_id = #{record.blogId,jdbcType=INTEGER},
+      blog_title = #{record.blogTitle,jdbcType=CHAR},
+      blog_author = #{record.blogAuthor,jdbcType=CHAR},
+      blog_date = #{record.blogDate,jdbcType=TIMESTAMP},
+      blog_read = #{record.blogRead,jdbcType=INTEGER},
+      blog_summary = #{record.blogSummary,jdbcType=CHAR},
+      blog_label = #{record.blogLabel,jdbcType=CHAR},
+      blog_delete = #{record.blogDelete,jdbcType=INTEGER},
+      blog_category = #{record.blogCategory,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateBlogReadById" parameterType="java.lang.Integer">
+  	UPDATE blog_details 
+  	SET blog_read = ((SELECT selTmp.blog_read FROM (select tmp.* from blog_details tmp) AS selTmp where blog_id = #{blogId}) + 1) 
+  	  WHERE blog_id = #{blogId}
+  </update>
+  
+  <update id="logicDeleteBlogById" parameterType="java.lang.Integer">
+  	UPDATE blog_details 
+  	SET blog_delete = 1 WHERE blog_id = #{blogId}
+  </update>
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.cetc38.model.BlogDetailsWithBLOBs" >
+    update blog_details
+    <set >
+      <if test="blogTitle != null" >
+        blog_title = #{blogTitle,jdbcType=CHAR},
+      </if>
+      <if test="blogAuthor != null" >
+        blog_author = #{blogAuthor,jdbcType=CHAR},
+      </if>
+      <if test="blogDate != null" >
+        blog_date = #{blogDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blogRead != null" >
+        blog_read = #{blogRead,jdbcType=INTEGER},
+      </if>
+      <if test="blogSummary != null" >
+        blog_summary = #{blogSummary,jdbcType=CHAR},
+      </if>
+      <if test="blogLabel != null" >
+        blog_label = #{blogLabel,jdbcType=CHAR},
+      </if>
+      <if test="blogDelete != null" >
+        blog_delete = #{blogDelete,jdbcType=INTEGER},
+      </if>
+      <if test="blogCategory != null" >
+        blog_category = #{blogCategory,jdbcType=INTEGER},
+      </if>
+      <if test="blogHtmlContent != null" >
+        blog_html_content = #{blogHtmlContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="blogMdContent != null" >
+        blog_md_content = #{blogMdContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where blog_id = #{blogId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cetc38.model.BlogDetailsWithBLOBs" >
+    update blog_details
+    set blog_title = #{blogTitle,jdbcType=CHAR},
+      blog_author = #{blogAuthor,jdbcType=CHAR},
+      blog_date = #{blogDate,jdbcType=TIMESTAMP},
+      blog_read = #{blogRead,jdbcType=INTEGER},
+      blog_summary = #{blogSummary,jdbcType=CHAR},
+      blog_label = #{blogLabel,jdbcType=CHAR},
+      blog_delete = #{blogDelete,jdbcType=INTEGER},
+      blog_category = #{blogCategory,jdbcType=INTEGER},
+      blog_html_content = #{blogHtmlContent,jdbcType=LONGVARCHAR},
+      blog_md_content = #{blogMdContent,jdbcType=LONGVARCHAR}
+    where blog_id = #{blogId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cetc38.model.BlogDetails" >
+    update blog_details
+    set blog_title = #{blogTitle,jdbcType=CHAR},
+      blog_author = #{blogAuthor,jdbcType=CHAR},
+      blog_date = #{blogDate,jdbcType=TIMESTAMP},
+      blog_read = #{blogRead,jdbcType=INTEGER},
+      blog_summary = #{blogSummary,jdbcType=CHAR},
+      blog_label = #{blogLabel,jdbcType=CHAR},
+      blog_delete = #{blogDelete,jdbcType=INTEGER},
+      blog_category = #{blogCategory,jdbcType=INTEGER}
+    where blog_id = #{blogId,jdbcType=INTEGER}
+  </update>
+</mapper>
