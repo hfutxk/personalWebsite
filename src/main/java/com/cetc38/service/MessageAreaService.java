@@ -1,6 +1,6 @@
 package com.cetc38.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.cetc38.model.MessageArea;
 
@@ -13,7 +13,7 @@ public interface MessageAreaService {
 	 * @param messageId
 	 * @return
 	 */
-	public ArrayList<MessageArea> queryAllMessageArea(int messageId);
+	public List<MessageArea> queryAllMessageArea(int messageId);
 	
 	/**
 	 * 插入新的留言

@@ -140,9 +140,9 @@ public class SendEmailHelper {
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);
 			// Set From: 头部头字段
-			message.setFrom(new InternetAddress("yige_robot@foxmail.com", "一格机器人", "UTF-8"));
+			message.setFrom(new InternetAddress("hfutxk1993@163.com", "一格机器人", "UTF-8"));
 			// 收件人电子邮箱 可用数组设置多个
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress("husen@hemingsheng.cn"));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress("hfutxk1993@163.com"));
 
 			// 设置标题
 			message.setSubject("个人网站联系站长邮件");
@@ -156,7 +156,7 @@ public class SendEmailHelper {
 			Transport transport = session.getTransport();
 			transport.connect();
 			// 对方的地址
-			transport.sendMessage(message, new Address[] { new InternetAddress("husen@hemingsheng.cn") });
+			transport.sendMessage(message, new Address[] { new InternetAddress("hfutxk1993@163.com") });
 			// 关闭连接
 			transport.close();
 

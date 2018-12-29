@@ -2,6 +2,8 @@ package com.cetc38.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class MessageArea {
     private Integer messageId;
 
@@ -9,6 +11,7 @@ public class MessageArea {
 
     private Integer messageBelong;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date messageDate;
 
     private String messageEmail;

@@ -63,8 +63,8 @@ $(function() {
 	Comment.allocate({
 		parent : $('#message_box'), // 你想要将这个评论放到页面哪个元素中
 		id : 0,
-		getCmtUrl : '/message.hms',
-		setCmtUrl : '/message.hms'
+		getCmtUrl : '/queryMessage',
+		setCmtUrl:'/createMessage'
 	})
 
 });
@@ -178,7 +178,7 @@ fn.getList = function() {
 		type : 'get',
 		dataType : 'json',
 		data : {
-			type : 'query_all',
+			
 			messageId : self.belong
 		},
 		success : function(data) {
@@ -200,7 +200,7 @@ fn.getList = function() {
 			// 增加reponse字段和处理时间
 			for ( var i in data) {
 				data[i].response = [];
-				data[i].messageDate = new Date(data[i].messageDate.time)
+				data[i].messageDate = new Date(data[i].messageDate)
 						.format('yyyy-MM-dd hh:mm:ss')
 			}
 			// 整理评论列表
@@ -404,12 +404,6 @@ fn.addCmt = function(_btn, _text, _parent) {
 	var email = '940706904@qq.com';
 	var username = '游客';
 
-	/*
-	 * username = $.cookie('user'); if (!username) { alert('游客') username =
-	 * '游客'; } email = $.cookie('email'); if (!email) { email =
-	 * 'default@163.com'; }
-	 */
-
 	var now = $.nowDateHMS();
 	// 将参数封装到对象里
 	var new_message = {};
@@ -419,18 +413,20 @@ fn.addCmt = function(_btn, _text, _parent) {
 	new_message.messageUsername = username;
 	new_message.messageContent = value;
 	new_message.messageDate = now;
-
+	alert(JSON.stringify(new_message))
 	$.ajax({
 		type : 'get',
 		dataType : 'json',
 		url : this.setCmtUrl,
 		data : {
-			type : 'create_one',
-			newMessage : JSON.stringify(new_message),
-		/*
-		 * belong: self.belong, parent: _parent, email: email, username:
-		 * username, content: value
-		 */
+//			newMessage : JSON.stringify(new_message),
+			    messageBelong: self.belong,
+			    messageParent: _parent, 
+			    messageEmail: email, 
+			    messageUsername:username,
+			    messageContent: value,
+			    messageDate:now
+ 
 		},
 		success : function(_data) {
 			// 解除禁止点击
@@ -592,6 +588,7 @@ fn.doClickResponse = function(_event) {
 		// 点击评论
 		var oText = target.parent().parent().find('.cmt-text').eq(0);
 		var parent = target.attr('data-id');
+		console.info(parent)
 		this.addCmt(target, oText, parent);
 	} else {
 		// 其他情况

@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>何明胜的个人网站</title>
+<title>个人网站</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="description"

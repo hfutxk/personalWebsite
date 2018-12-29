@@ -65,16 +65,6 @@
 <script type="text/javascript">
 $(function() {
 	
-/* 	var blogBody = 
-		'<div>'
-		+ '	<h2 class="text-align-center"><input id="hiden_blogId" type="hidden" value="'
-		+ 	'${blog.blogId}' + '" />' 
-		+ '		<a href=#>' + '${blog.blogTitle}' + '</a>'
-		+ '	</h2>' 
-		+ '	<span class="fh5co-post-date">' + new Date('${blog.blogDate}').format('yyyy-MM-dd hh:mm:ss') + '</span>' 
-		+ ' <span class="fh5co-post-date">作者:' + '${blog.blogAuthor}' + '</span>'
-		+ ' <span class="fh5co-post-date">浏览' + '${blog.blogRead}' + '次</span>'
-		+ ' <span class="fh5co-post-date">关键字：' + keywordsProcess('${blog.blogLabel}') + '</span>'; */
 	var keywords = keywordsProcess('${blog.blogLabel}') ;
 	$('#keywords').append(keywords);	
 	if (isSuperAdminOrSelf('${blog.blogAuthor}')) {

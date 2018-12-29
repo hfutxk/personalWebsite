@@ -64,12 +64,12 @@ function loadSimpleCode(codeData){
 	$('#latestCode').append('<div class="col-md-3 col-sm-6 col-padding article-box-div" >'
 			+ '<div class="blog-entry">'
 			+ '<div class="desc">'
-			+ '<h3 class="article-title"><a href="/code.hms?codeId=' + codeData.codeId + '">' + codeData.codeTitle + '</a></h3>'
+			+ '<h3 class="article-title"><a href="/queryCode?codeId=' + codeData.codeId + '">' + codeData.codeTitle + '</a></h3>'
 			+ '<span class="article-author">'+ '作者:'+ codeData.codeAuthor +'&nbsp;'
 			+  new Date(codeData.codeDate).format('yyyy-MM-dd hh:mm:ss') + '&nbsp;'
 			+ '<i class="icon-comment"></i>浏览' + codeData.codeRead + '次</span>'
 			+ '<p><b>摘要：</b>' + codeData.codeSummary + '</p>'
-			+ '<a href="/code.hms?codeId=' + codeData.codeId + '" class="lead read-more" >阅读更多 <i class="glyphicon glyphicon-arrow-right"></i></a>'
+			+ '<a href="/queryCode?codeId=' + codeData.codeId + '" class="lead read-more" >阅读更多 <i class="glyphicon glyphicon-arrow-right"></i></a>'
 			+ '</div>'
 			+ '</div>');
 }

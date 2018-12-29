@@ -2,16 +2,18 @@ package com.cetc38.common;
 
 public class CommonResult {
 
-	private Integer totalNum;
+	
+	private Integer result ;
 
-	public Integer getTotalNum() {
-		return totalNum;
+	public Integer getResult() {
+		return result;
 	}
 
-	public void setTotalNum(Integer totalNum) {
-		this.totalNum = totalNum;
+	public void setResult(Integer result) {
+		this.result = result;
 	}
-	
-	
+
+
+
 	
 }

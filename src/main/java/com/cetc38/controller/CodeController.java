@@ -5,10 +5,12 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cetc38.model.BlogDetailsWithBLOBs;
 import com.cetc38.model.CodeLibrary;
 import com.cetc38.model.CodeLibraryWithBLOBs;
 import com.cetc38.service.CodeLibraryService;
@@ -48,5 +50,17 @@ public class CodeController {
 		List<CodeLibraryWithBLOBs> list = this.codeLibraryService.queryCodeLibraryPerPage(bVo, pageSize, pageNo);
 		return list;
 	}
+	
+	@RequestMapping(value="/queryCode")
+	public String queryBlog(Integer codeId,Model model) {
+		System.out.println("jinlai le ");
+		System.out.println("blogId:++++++++++++====="+codeId);
+		CodeLibraryWithBLOBs code = (CodeLibraryWithBLOBs) this.codeLibraryService.queryPerCodeById(codeId);
+		this.codeLibraryService.queryPerCodeById(codeId);
+//		String json = JsonUtils.objectToJson(blog);
+		model.addAttribute("code", code);
+		return "/topic/code/code_template";
+	}
+	
 
 }

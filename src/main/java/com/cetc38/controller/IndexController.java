@@ -40,5 +40,16 @@ public class IndexController {
 		return "/topic/code/code";
 	}
 	
+	@RequestMapping(value="/module/message")
+	public String moremessage(){
+		return "/topic/message/message";
+	}
+	
+	@RequestMapping(value="/module/contact")
+	public String getContact(){
+		
+		return "/topic/contact/contact";
+	}
+	
 
 }

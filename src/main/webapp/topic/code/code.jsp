@@ -35,10 +35,10 @@
 		<!-- 中间内容  -->
 		<div id="fh5co-main">
 			<div id="list_code" class="fh5co-post">
-				<!-- js脚本动态添加内容 --
+				
 			</div>
 		</div>
-		<!-- å³ä¾§å¯¼èª  -->
+		
 	</div>
 </body>
 </html>
