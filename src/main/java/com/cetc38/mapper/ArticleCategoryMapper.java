@@ -1,9 +1,12 @@
 package com.cetc38.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.cetc38.model.ArticleCategory;
 import com.cetc38.model.ArticleCategoryExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import com.cetc38.model.ArticleCategoryVO;
 
 public interface ArticleCategoryMapper {
     int countByExample(ArticleCategoryExample example);
@@ -27,4 +30,10 @@ public interface ArticleCategoryMapper {
     int updateByPrimaryKeySelective(ArticleCategory record);
 
     int updateByPrimaryKey(ArticleCategory record);
+    
+    int queryMaxId();
+    
+    List<ArticleCategoryVO> queryBlogCategoryAndNum();
+    
+    List<ArticleCategoryVO> queryCodeCategoryAndNum();
 }

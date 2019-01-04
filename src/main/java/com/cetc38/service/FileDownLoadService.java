@@ -1,6 +1,6 @@
 package com.cetc38.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.cetc38.model.FileDownload;
 
@@ -21,7 +21,7 @@ public interface FileDownLoadService {
 	 * @param pageNo
 	 * @return
 	 */
-	public ArrayList<FileDownload> queryFileDownlaodPerPage(int pageSize, int pageNo);
+	public List<FileDownload> queryFileDownlaodPerPage(int pageSize, int pageNo);
 	
 	/**
 	 * 根据Id查询查询某个下载

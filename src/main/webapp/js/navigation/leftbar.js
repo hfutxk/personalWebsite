@@ -70,11 +70,10 @@ function getCategory3Num(type){
 	$.ajax({
 		type : 'POST',
 		async : false,
-		url : '/category.hms',
+		url : '/queryCategory',
 		dataType : 'json',
 		data : {
-			type : 'query_category',
-			'class' : type,
+			classfication : type,
 		},
 		success : function(response) {
 			var $category = $('#txt_articleCategory').children(".list-unstyled");
@@ -82,7 +81,7 @@ function getCategory3Num(type){
 			for(var x in response){
 				if(x == 0){
 					$category.append('<li>'
-							+'<a href="/module/' + type + '.hms">'
+							+'<a href=/module/' + type + '>'
 							+ response[x].categoryName
 							+'&emsp;<span class="badge">'
 							+ response[x].categoryNum
@@ -90,7 +89,7 @@ function getCategory3Num(type){
 				}
 				else{
 					$category.append('<li>'
-							+'<a href="/module/' + type + '.hms?category=' + response[x].categoryId + '">'
+							+'<a href="/module/' + type + '?category=' + response[x].categoryId + '">'
 							+ response[x].categoryName
 							+'&emsp;<span class="badge">'
 							+ response[x].categoryNum

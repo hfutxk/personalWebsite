@@ -117,7 +117,6 @@ function queryBlogCatalog(pageNo){
 		url : '/blog/queryOnePage',
 		dataType : 'json',
 		data : {
-//			type : 'query_one_page',
 			keywords : $.getUrlParam('keywords') ? $.getUrlParam('keywords') : '',
 			category : $.getUrlParam('category') ? $.getUrlParam('category') : '',
 			pageSize : blog_page_size,

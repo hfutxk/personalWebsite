@@ -93,7 +93,7 @@ public class SendEmailHelper {
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);
 			// Set From: 头部头字段
-			message.setFrom(new InternetAddress("yige_robot@foxmail.com", "一格网站机器人", "UTF-8"));
+			message.setFrom(new InternetAddress("dlutxk1993@163.com", "一格网站机器人", "UTF-8"));
 			// 收件人电子邮箱 可用数组设置多个
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
 
@@ -140,7 +140,7 @@ public class SendEmailHelper {
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);
 			// Set From: 头部头字段
-			message.setFrom(new InternetAddress("hfutxk1993@163.com", "一格机器人", "UTF-8"));
+			message.setFrom(new InternetAddress("dlutxk1993@163.com", "一格机器人", "UTF-8"));
 			// 收件人电子邮箱 可用数组设置多个
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress("hfutxk1993@163.com"));
 
@@ -188,18 +188,20 @@ public class SendEmailHelper {
 		properties.put("mail.smtp.ssl.enable", "true");
 		properties.put("mail.smtp.ssl.socketFactory", sf);
 		// 设置邮件服务器主机名
-		properties.setProperty("mail.host", "smtp.qq.com");
+		properties.setProperty("mail.host", "123.125.50.138");
 		// 设置端口
 		properties.setProperty("mail.smtp.port", "465");
+		
+		properties.setProperty("mail.transport.protocol", "smtp");
 
 		// 根据认证获取默认session对象
 		Session session = Session.getDefaultInstance(properties, new Authenticator() {
 			@Override
 			public PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("yige_robot@foxmail.com", "ejmfrxvtxkzygjhj");
+				return new PasswordAuthentication("dlutxk1993@163.com", "qwerasdfzxcv1234");
 			}
 		});
-
+		
 		return session;
 	}
 }

@@ -1,8 +1,9 @@
 package com.cetc38.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.cetc38.model.ArticleCategory;
+import com.cetc38.model.ArticleCategoryVO;
 
 
 public interface ArticleCategoryService {
@@ -25,11 +26,18 @@ public interface ArticleCategoryService {
 	 * @param classification
 	 * @return
 	 */
-	public ArrayList<ArticleCategory> queryCategory3Num(String classification);
+	public List<ArticleCategoryVO> queryBlogCategoryAndNum();
 	
+	
+	/**
+	 * 根据文章类别查询分类和相应的数量
+	 * @param classification
+	 * @return
+	 */
+	public List<ArticleCategoryVO> queryCodeCategoryAndNum();
 	/**
 	 * 查询所有分类
 	 * @return
 	 */
-	public ArrayList<ArticleCategory> queryAllCategory();
+	public List<ArticleCategory> queryAllCategory();
 }

@@ -20,6 +20,21 @@ public class IndexController {
 	
 		return "index" ;
 	}
+	
+	@RequestMapping("/login")
+	public String login(){
+	
+		return "/module/login" ;
+	}
+	
+	@RequestMapping("/register")
+	public String register(){
+	
+		return "/module/register" ;
+	}
+	
+	
+	
 	@RequestMapping(value="/latestRlseFetr",method=RequestMethod.POST)
 	@ResponseBody
 	public ReleaseFeature latestRlseFetr(){
@@ -50,6 +65,13 @@ public class IndexController {
 		
 		return "/topic/contact/contact";
 	}
+	
+	@RequestMapping(value="/module/download")
+	public String getDownload(){
+		
+		return "/topic/download/download";
+	}
+	
 	
 
 }

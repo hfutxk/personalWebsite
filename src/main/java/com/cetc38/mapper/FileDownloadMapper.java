@@ -27,4 +27,6 @@ public interface FileDownloadMapper {
     int updateByPrimaryKeySelective(FileDownload record);
 
     int updateByPrimaryKey(FileDownload record);
+    
+    int updateFileDownCountByUrl(String fileUrl);
 }

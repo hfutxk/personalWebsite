@@ -17,8 +17,11 @@ public class ContactController {
 	@PostMapping("/contact")
 	@ResponseBody
 	public int contact(String contactName,String contactEmail,String contactPhone,String contactContent){
+		System.out.println("jinglai e ma ");
 		SendEmailHelper sendEmail = new SendEmailHelper();
+		System.out.println(contactName+" "+ contactEmail+"  "+contactPhone+"   "+contactContent);
 		int result = sendEmail.sendEmail2Admin(contactName, contactEmail, contactPhone, contactContent);
+		System.out.println(result);
 		return result ;
 	}
 	

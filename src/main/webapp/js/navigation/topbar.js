@@ -14,7 +14,7 @@ $(document).ready(
 					menuBarNo).addClass('active');
 
 			// 加载当前网站访问统计
-			loadAccessStatistics();
+		/*	loadAccessStatistics();*/
 
 			// 搜索类型选择事件注册
 			chooseSearchType();

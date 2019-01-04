@@ -208,4 +208,13 @@
       file_download_count = #{fileDownloadCount,jdbcType=INTEGER}
     where file_id = #{fileId,jdbcType=INTEGER}
   </update>
+  <update id="updateFileDownCountByUrl" parameterType="java.lang.String">
+	update file_download 
+	set 
+	file_download_count = (
+	select 
+	fb.file_download_count from 
+	(select (fa.file_download_count+1) file_download_count from file_download fa where fa.file_url= #{fileUrl}) fb )
+	where file_url= #{fileUrl}
+  </update>
 </mapper>

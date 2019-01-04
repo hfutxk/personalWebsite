@@ -7,6 +7,12 @@
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="category_delete" property="categoryDelete" jdbcType="INTEGER" />
   </resultMap>
+  <resultMap id="ResultMap" type="com.cetc38.model.ArticleCategoryVO" >
+    <id column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="category_name" property="categoryName" jdbcType="CHAR" />
+    <result column="category_num" property="categoryNum" jdbcType="INTEGER" />
+  </resultMap>
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -141,6 +147,31 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  
+  <select id="queryMaxId" resultType="java.lang.Integer">
+  	    select Max(category_id) from article_category
+  </select>
+  
+  <select id="queryBlogCategoryAndNum" resultMap="ResultMap">
+  		SELECT  category_id , category_name ,COUNT(*) AS category_num 
+			FROM article_category 
+			LEFT JOIN  blog_details  ON 
+			blog_delete = 0 AND category_id = blog_category
+			WHERE  blog_category IS NOT NULL 
+			GROUP BY category_id,category_name  
+			ORDER BY  category_id
+  </select>
+  
+  <select id="queryCodeCategoryAndNum" resultMap="ResultMap">
+  		SELECT  category_id , category_name ,COUNT(*) AS category_num 
+			FROM article_category 
+			LEFT JOIN  code_library  ON 
+			code_delete = 0 AND category_id = code_category
+			WHERE  code_category IS NOT NULL 
+			GROUP BY category_id,category_name  
+			ORDER BY  category_id
+  </select>
+  
   <update id="updateByExampleSelective" parameterType="map" >
     update article_category
     <set >

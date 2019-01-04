@@ -83,14 +83,6 @@
 					class="glyphicon glyphicon-hand-right"></span>&nbsp;阅读更多代码</a>
 				<div id="latestCode" class="row"></div>
 			</div>
-			<!-- 每日一言  -->
-			<script
-				src="https://api.lwl12.com/hitokoto/v1?encode=js&charset=utf-8"></script>
-			<div id="lwlhitokoto">
-				<script>
-					lwlhitokoto();
-				</script>
-			</div>
 		</div>
 		<!-- 右侧导航  -->
 	</div>
